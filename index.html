@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chez KAMAKY — Boutique en ligne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="nav-logo">
+      <span class="logo-cauris" aria-hidden="true">𓇢𓆉</span>
+      <img src="logo-original.png" alt="Chez KAMAKY" class="logo-img" />
+      <span class="logo-cauris" aria-hidden="true">𓆉𓇢</span>
+    </div>
+    <div class="nav-links">
+      <a href="#produits">Produits</a>
+      <a href="#apropos">À propos</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-icon" aria-label="Rechercher">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="btn-icon btn-cart" id="btn-cart" aria-label="Panier">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge" id="cart-badge">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">
+        <span class="cauri-inline">𓇢</span>
+        Abidjan · Afrique
+        <span class="cauri-inline">𓇢</span>
+      </p>
+      <h1 class="hero-title">La boutique<br /><em>qui vous ressemble</em></h1>
+      <p class="hero-sub">Vêtements, chaussures, électronique & artisanat — sélectionnés avec soin, livrés avec amour.</p>
+      <div class="hero-btns">
+        <a href="#produits" class="btn-primary">Découvrir la boutique</a>
+        <a href="#apropos" class="btn-ghost">Notre histoire</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card hc1"><span class="hc-emoji">👘</span><span class="hc-label">Vêtements</span></div>
+      <div class="hero-card hc2"><span class="hc-emoji">👟</span><span class="hc-label">Chaussures</span></div>
+      <div class="hero-card hc3"><span class="hc-emoji">📱</span><span class="hc-label">Électronique</span></div>
+      <div class="hero-card hc4"><span class="hc-emoji">🧺</span><span class="hc-label">Artisanat</span></div>
+    </div>
+  </section>
+
+  <!-- BANDEAU -->
+  <div class="bandeau">
+    <span>𓇢 Livraison gratuite dès 30 000 FCFA &nbsp;𓆉&nbsp; Produits authentiques garantis &nbsp;𓇢&nbsp; Paiement sécurisé &nbsp;𓆉&nbsp; Service client 7j/7 &nbsp;𓇢&nbsp; Livraison gratuite dès 30 000 FCFA &nbsp;𓆉&nbsp; Produits authentiques garantis &nbsp;𓇢&nbsp; Paiement sécurisé &nbsp;𓆉&nbsp; Service client 7j/7</span>
+  </div>
+
+  <!-- CAURIS BAND -->
+  <div class="cauri-band">
+    <div class="cauri-item"><span>𓇢</span><div><strong>Livraison 48h</strong><br>Partout en Côte d'Ivoire</div></div>
+    <div class="cauri-item"><span>𓆉</span><div><strong>100% Authentique</strong><br>Produits vérifiés</div></div>
+    <div class="cauri-item"><span>𓇢</span><div><strong>Paiement sécurisé</strong><br>Mobile Money & carte</div></div>
+    <div class="cauri-item"><span>𓆉</span><div><strong>Service client</strong><br>7j/7 — on est là pour vous</div></div>
+  </div>
+
+  <!-- PRODUITS -->
+  <section class="section" id="produits">
+    <div class="section-header">
+      <div class="section-deco" aria-hidden="true">𓇢 𓆉 𓇢</div>
+      <h2 class="section-title">Nos produits</h2>
+      <p class="section-sub">Une sélection faite avec le cœur</p>
+    </div>
+    <div class="filtres">
+      <button class="filtre active" data-cat="Tous">Tous</button>
+      <button class="filtre" data-cat="Vêtements">👘 Vêtements</button>
+      <button class="filtre" data-cat="Chaussures">👟 Chaussures</button>
+      <button class="filtre" data-cat="Électronique">📱 Électronique</button>
+      <button class="filtre" data-cat="Artisanat">🧺 Artisanat</button>
+    </div>
+    <div class="produits-grid" id="produits-grid"></div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section class="section section-apropos" id="apropos">
+    <div class="apropos-inner">
+      <div class="apropos-text">
+        <p class="hero-eyebrow"><span class="cauri-inline">𓇢</span> Notre histoire <span class="cauri-inline">𓇢</span></p>
+        <h2>Chez KAMAKY,<br /><em>c'est chez vous</em></h2>
+        <p>On est nés d'une passion simple : mettre à portée de clic ce que vous cherchez depuis toujours. Des vêtements qui racontent une histoire, des chaussures qui accompagnent chaque pas, de l'électronique fiable et de l'artisanat qui honore notre culture.</p>
+        <p>Chaque produit est choisi avec soin. Parce que vous méritez le meilleur, livré avec le sourire — depuis Abidjan, pour toute l'Afrique.</p>
+      </div>
+      <div class="apropos-visuels">
+        <div class="av-card"><span class="av-num">500+</span><span class="av-label">Clients satisfaits</span></div>
+        <div class="av-card"><span class="av-num">4</span><span class="av-label">Catégories de produits</span></div>
+        <div class="av-card"><span class="av-num">48h</span><span class="av-label">Délai de livraison</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section section-contact" id="contact">
+    <div class="section-header">
+      <div class="section-deco" aria-hidden="true">𓇢 𓆉 𓇢</div>
+      <h2 class="section-title">Nous contacter</h2>
+      <p class="section-sub">On est là pour vous !</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item"><span class="ci-icon">📍</span><div><strong>Adresse</strong><p>Cocody, Abidjan, Côte d'Ivoire</p></div></div>
+        <div class="contact-item"><span class="ci-icon">📞</span><div><strong>Téléphone</strong><p>+225 07 00 00 00 00</p></div></div>
+        <div class="contact-item"><span class="ci-icon">📧</span><div><strong>Email</strong><p>contact@chezkamaky.ci</p></div></div>
+        <div class="contact-item"><span class="ci-icon">🕐</span><div><strong>Horaires</strong><p>Lun–Sam : 8h–20h | Dim : 9h–17h</p></div></div>
+      </div>
+      <form class="contact-form" onsubmit="envoyerMessage(event)">
+        <div class="form-group"><label>Votre nom</label><input type="text" placeholder="Ex : Kofi Mensah" required /></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="votre@email.com" required /></div>
+        <div class="form-group"><label>Message</label><textarea rows="4" placeholder="Comment pouvons-nous vous aider ?" required></textarea></div>
+        <button type="submit" class="btn-primary" style="width:100%">Envoyer le message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="logo-original.png" alt="Chez KAMAKY" style="height:40px;width:auto;" />
+        <p>La boutique qui vous ressemble.<br />Abidjan · Afrique.</p>
+        <div class="footer-cauris" aria-hidden="true">𓇢 𓆉 𓇢 𓆉 𓇢</div>
+      </div>
+      <div class="footer-links">
+        <strong>Boutique</strong>
+        <a href="#produits">Vêtements</a>
+        <a href="#produits">Chaussures</a>
+        <a href="#produits">Électronique</a>
+        <a href="#produits">Artisanat</a>
+      </div>
+      <div class="footer-links">
+        <strong>Informations</strong>
+        <a href="#apropos">À propos</a>
+        <a href="#contact">Contact</a>
+        <a href="#">Livraison</a>
+        <a href="#">Retours</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>𓇢 &nbsp; © 2026 Chez KAMAKY — Abidjan, Côte d'Ivoire &nbsp; 𓇢</p>
+    </div>
+  </footer>
+
+  <!-- PANIER SIDEBAR -->
+  <div class="panier-overlay" id="panier-overlay" onclick="fermerPanier()"></div>
+  <aside class="panier-sidebar" id="panier-sidebar">
+    <div class="panier-header">
+      <h3>𓇢 Mon panier</h3>
+      <button class="btn-icon" onclick="fermerPanier()" aria-label="Fermer">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="panier-items" id="panier-items"></div>
+    <div class="panier-footer" id="panier-footer"></div>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
