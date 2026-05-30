@@ -2,22 +2,41 @@
 // DONNÉES PRODUITS
 // ===========================
 const produits = [
-  { id: 1,  nom: "Boubou africain",       cat: "Vêtements",    prix: 15000, emoji: "👘", badge: "new"   },
-  { id: 2,  nom: "Chemise wax homme",     cat: "Vêtements",    prix: 8500,  emoji: "👔", badge: null    },
-  { id: 3,  nom: "Robe pagne femme",      cat: "Vêtements",    prix: 12000, emoji: "👗", badge: "promo" },
-  { id: 4,  nom: "T-shirt coton premium", cat: "Vêtements",    prix: 5500,  emoji: "👕", badge: null    },
-  { id: 5,  nom: "Sneakers blanc",        cat: "Chaussures",   prix: 18500, emoji: "👟", badge: "new"   },
-  { id: 6,  nom: "Sandales cuir",         cat: "Chaussures",   prix: 9000,  emoji: "🥿", badge: null    },
-  { id: 7,  nom: "Mocassins homme",       cat: "Chaussures",   prix: 14000, emoji: "👞", badge: "promo" },
-  { id: 8,  nom: "Tongs artisanales",     cat: "Chaussures",   prix: 4500,  emoji: "🩴", badge: null    },
-  { id: 9,  nom: "Smartphone 128 Go",     cat: "Électronique", prix: 95000, emoji: "📱", badge: "new"   },
-  { id: 10, nom: "Écouteurs sans fil",    cat: "Électronique", prix: 22000, emoji: "🎧", badge: null    },
-  { id: 11, nom: "Chargeur rapide 65W",   cat: "Électronique", prix: 8500,  emoji: "🔌", badge: "promo" },
-  { id: 12, nom: "Montre connectée",      cat: "Électronique", prix: 35000, emoji: "⌚", badge: null    },
-  { id: 13, nom: "Panier tressé",         cat: "Artisanat",    prix: 6500,  emoji: "🧺", badge: null    },
-  { id: 14, nom: "Masque décoratif",      cat: "Artisanat",    prix: 11000, emoji: "🎭", badge: "new"   },
-  { id: 15, nom: "Collier bronze",        cat: "Artisanat",    prix: 5000,  emoji: "📿", badge: null    },
-  { id: 16, nom: "Sculpture bois",        cat: "Artisanat",    prix: 28000, emoji: "🪵", badge: null    },
+  // VÊTEMENTS
+  { id: 1,  nom: "Robe fluide imprimée",      cat: "Vêtements",    prix: 12000, emoji: "👗", badge: "new"   },
+  { id: 2,  nom: "Ensemble crop top & jupe",  cat: "Vêtements",    prix: 9500,  emoji: "👚", badge: null    },
+  { id: 3,  nom: "Robe soirée élégante",      cat: "Vêtements",    prix: 18000, emoji: "👘", badge: "promo" },
+  { id: 4,  nom: "Tenue décontractée femme",  cat: "Vêtements",    prix: 7500,  emoji: "🧥", badge: null    },
+  { id: 5,  nom: "Combinaison moderne",       cat: "Vêtements",    prix: 14000, emoji: "🩱", badge: "new"   },
+  { id: 6,  nom: "Robe casual quotidienne",   cat: "Vêtements",    prix: 8000,  emoji: "👗", badge: null    },
+
+  // SACS
+  { id: 7,  nom: "Sac à main cuir camel",     cat: "Sacs",         prix: 22000, emoji: "👜", badge: "new"   },
+  { id: 8,  nom: "Sac à dos tendance",        cat: "Sacs",         prix: 15000, emoji: "🎒", badge: null    },
+  { id: 9,  nom: "Pochette soirée dorée",     cat: "Sacs",         prix: 8500,  emoji: "👛", badge: "promo" },
+  { id: 10, nom: "Cabas plage XXL",           cat: "Sacs",         prix: 11000, emoji: "🛍️", badge: null    },
+  { id: 11, nom: "Mini sac bandoulière",      cat: "Sacs",         prix: 13000, emoji: "👜", badge: "new"   },
+
+  // CHAUSSURES
+  { id: 12, nom: "Sneakers blanc premium",    cat: "Chaussures",   prix: 18500, emoji: "👟", badge: "new"   },
+  { id: 13, nom: "Sandales talon doré",       cat: "Chaussures",   prix: 12000, emoji: "👡", badge: null    },
+  { id: 14, nom: "Mocassins cuir marron",     cat: "Chaussures",   prix: 16000, emoji: "👞", badge: "promo" },
+  { id: 15, nom: "Tongs artisanales colorées",cat: "Chaussures",   prix: 4500,  emoji: "🩴", badge: null    },
+  { id: 16, nom: "Escarpins noirs élégants",  cat: "Chaussures",   prix: 14000, emoji: "👠", badge: null    },
+
+  // ÉLECTRONIQUE
+  { id: 17, nom: "Smartphone 128 Go",         cat: "Électronique", prix: 95000, emoji: "📱", badge: "new"   },
+  { id: 18, nom: "Écouteurs sans fil",        cat: "Électronique", prix: 22000, emoji: "🎧", badge: null    },
+  { id: 19, nom: "Chargeur rapide 65W",       cat: "Électronique", prix: 8500,  emoji: "🔌", badge: "promo" },
+  { id: 20, nom: "Montre connectée",          cat: "Électronique", prix: 35000, emoji: "⌚", badge: null    },
+  { id: 21, nom: "Batterie externe 20000mAh", cat: "Électronique", prix: 12000, emoji: "🔋", badge: "new"   },
+
+  // ARTISANAT
+  { id: 22, nom: "Panier tressé coloré",      cat: "Artisanat",    prix: 6500,  emoji: "🧺", badge: null    },
+  { id: 23, nom: "Collier perles africaines", cat: "Artisanat",    prix: 5000,  emoji: "📿", badge: "new"   },
+  { id: 24, nom: "Bracelet bronze artisanal", cat: "Artisanat",    prix: 3500,  emoji: "⭕", badge: null    },
+  { id: 25, nom: "Sculpture bois décorative", cat: "Artisanat",    prix: 28000, emoji: "🪵", badge: null    },
+  { id: 26, nom: "Masque mural décoratif",    cat: "Artisanat",    prix: 11000, emoji: "🎭", badge: "promo" },
 ];
 
 // ===========================
