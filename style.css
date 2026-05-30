@@ -32,7 +32,7 @@ button { font-family: inherit; cursor: pointer; }
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
-  height: 72px;
+  height: 80px;
   background: var(--noir);
   border-bottom: 1px solid var(--gris-cl);
   position: sticky;
@@ -41,7 +41,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .nav-logo { display: flex; align-items: center; gap: 10px; }
-.logo-img  { height: 44px; width: auto; object-fit: contain; }
+.logo-img  { height: 65px; width: auto; object-fit: contain; }
 
 /* cauris décoratifs autour du logo */
 .logo-cauris {
