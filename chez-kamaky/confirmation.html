@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commande confirmée — Chez KAMAKY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .confirm-wrap {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .confirm-box {
+      background: var(--noir-3);
+      border: 1px solid var(--gris-cl);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .confirm-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--or-fonce), var(--or), var(--or-cl), var(--or), var(--or-fonce));
+    }
+    .confirm-cauris {
+      font-size: 32px;
+      color: var(--or);
+      opacity: .4;
+      letter-spacing: 8px;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .confirm-icon {
+      width: 72px; height: 72px;
+      background: rgba(29,158,117,.12);
+      border: 2px solid #1D9E75;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 30px;
+      animation: popIn .5s ease both;
+    }
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .confirm-titre {
+      font-family: var(--font-titre);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blanc);
+      margin-bottom: 12px;
+    }
+    .confirm-titre em { font-style: italic; color: var(--or); }
+    .confirm-sub {
+      font-size: 15px;
+      color: var(--gris);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .confirm-num {
+      background: var(--noir-4);
+      border: 1px solid var(--or-fonce);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .confirm-num span { font-size: 13px; color: var(--gris); }
+    .confirm-num strong { font-family: var(--font-titre); font-size: 18px; color: var(--or); }
+    .confirm-etapes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+      text-align: left;
+    }
+    .etape {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      background: var(--noir-4);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--gris-cl);
+    }
+    .etape-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--or-bg);
+      border: 1px solid var(--or-fonce);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 500; color: var(--or);
+      flex-shrink: 0;
+    }
+    .etape-txt { font-size: 13px; color: var(--gris); line-height: 1.5; }
+    .etape-txt strong { color: var(--blanc-2); display: block; margin-bottom: 2px; }
+    .confirm-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .confirm-footer-cauris {
+      margin-top: 36px;
+      font-size: 20px;
+      color: var(--or);
+      opacity: .3;
+      letter-spacing: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">
+      <span class="logo-cauris" aria-hidden="true">𓆉</span>
+      <img src="logo-original.png" alt="Chez KAMAKY" class="logo-img" />
+      <span class="logo-cauris" aria-hidden="true">𓆉</span>
+    </div>
+  </nav>
+
+  <div class="confirm-wrap">
+    <div class="confirm-box">
+      <span class="confirm-cauris" aria-hidden="true">𓇢 𓆉 𓇢</span>
+
+      <div class="confirm-icon">✓</div>
+
+      <h1 class="confirm-titre">Commande <em>confirmée !</em></h1>
+      <p class="confirm-sub" id="confirm-sub">
+        Merci pour votre confiance !<br>
+        Votre commande a bien été reçue et sera traitée dans les plus brefs délais.
+      </p>
+
+      <div class="confirm-num">
+        <span>Numéro de commande</span>
+        <strong id="num-commande">#KMK-00001</strong>
+      </div>
+
+      <div class="confirm-etapes">
+        <div class="etape">
+          <div class="etape-num">1</div>
+          <div class="etape-txt">
+            <strong>Confirmation par email</strong>
+            Un récapitulatif vous sera envoyé par email sous 5 minutes.
+          </div>
+        </div>
+        <div class="etape">
+          <div class="etape-num">2</div>
+          <div class="etape-txt">
+            <strong>Préparation de la commande</strong>
+            Votre commande est préparée avec soin dans les 12 heures.
+          </div>
+        </div>
+        <div class="etape">
+          <div class="etape-num">3</div>
+          <div class="etape-txt">
+            <strong>𓇢 Livraison en 48h</strong>
+            Notre livreur vous contacte 30 minutes avant l'arrivée.
+          </div>
+        </div>
+      </div>
+
+      <div class="confirm-btns">
+        <a href="index.html" class="btn-primary">Continuer mes achats</a>
+        <a href="index.html#contact" class="btn-ghost">Nous contacter</a>
+      </div>
+
+      <div class="confirm-footer-cauris" aria-hidden="true">𓇢 𓆉 𓇢 𓆉 𓇢</div>
+    </div>
+  </div>
+
+  <script>
+    // Récupérer le prénom depuis l'URL
+    const params = new URLSearchParams(window.location.search);
+    const prenom = params.get('prenom');
+    if (prenom) {
+      document.getElementById('confirm-sub').innerHTML =
+        `Merci <strong style="color:var(--or)">${prenom}</strong> pour votre confiance !<br>
+         Votre commande a bien été reçue et sera traitée dans les plus brefs délais.`;
+    }
+
+    // Générer un numéro de commande aléatoire
+    const num = 'KMK-' + Math.floor(10000 + Math.random() * 90000);
+    document.getElementById('num-commande').textContent = '#' + num;
+  </script>
+
+</body>
+</html>
