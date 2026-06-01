@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paiement — Chez KAMAKY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .pay-wrap { max-width: 1000px; margin: 0 auto; padding: 40px 20px 80px; }
+    .pay-back { display: inline-flex; align-items: center; gap: 8px; color: var(--or); font-size: 14px; margin-bottom: 32px; transition: opacity .2s; }
+    .pay-back:hover { opacity: .7; }
+    .pay-title { font-family: var(--font-titre); font-size: 32px; font-weight: 700; color: var(--blanc); margin-bottom: 8px; }
+    .pay-sub   { font-size: 14px; color: var(--gris); margin-bottom: 40px; display: flex; align-items: center; gap: 8px; }
+    .pay-steps { display: flex; gap: 0; margin-bottom: 40px; border-bottom: 1px solid var(--gris-cl); }
+    .pay-step  { flex: 1; text-align: center; padding: 12px 8px; font-size: 13px; color: var(--gris); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .pay-step.active { color: var(--or); border-bottom-color: var(--or); font-weight: 500; }
+    .pay-step.done   { color: #4DC9A0; border-bottom-color: #1D9E75; }
+    .pay-layout { display: grid; grid-template-columns: 1fr 380px; gap: 32px; }
+    @media (max-width: 768px) { .pay-layout { grid-template-columns: 1fr; } }
+    .pay-card { background: var(--noir-3); border: 1px solid var(--gris-cl); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; }
+    .pay-card-title { font-size: 13px; font-weight: 500; color: var(--or); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; color: var(--blanc-2); margin-bottom: 6px; font-weight: 500; }
+    .field input, .field select {
+      width: 100%; padding: 11px 14px;
+      background: var(--noir-4); border: 1px solid var(--gris-cl);
+      border-radius: var(--radius-sm); color: var(--blanc);
+      font-family: var(--font-corps); font-size: 14px;
+      outline: none; transition: border-color .2s;
+    }
+    .field input:focus, .field select:focus { border-color: var(--or); }
+    .field input::placeholder { color: var(--gris); }
+    .field select option { background: var(--noir-3); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card-preview {
+      background: linear-gradient(135deg, var(--noir-4) 0%, #1c1a0f 100%);
+      border: 1px solid var(--or-fonce);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-preview::before {
+      content: '𓇢';
+      position: absolute; right: 16px; top: 12px;
+      font-size: 28px; color: var(--or); opacity: .3;
+    }
+    .card-num-display { font-size: 18px; font-weight: 500; letter-spacing: 3px; color: var(--blanc); margin-bottom: 16px; font-family: monospace; }
+    .card-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--gris); }
+    .card-meta span { display: flex; flex-direction: column; gap: 2px; }
+    .card-meta strong { font-size: 13px; color: var(--blanc-2); }
+    .resume-card { background: var(--noir-3); border: 1px solid var(--gris-cl); border-radius: var(--radius); padding: 24px; position: sticky; top: 90px; }
+    .resume-title { font-family: var(--font-titre); font-size: 18px; font-weight: 600; color: var(--or); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .resume-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gris-cl); font-size: 14px; }
+    .resume-item:last-of-type { border-bottom: none; }
+    .ri-left { display: flex; align-items: center; gap: 10px; }
+    .ri-img { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; }
+    .ri-nom   { color: var(--blanc-2); font-size: 13px; }
+    .ri-qty   { font-size: 11px; color: var(--gris); }
+    .ri-prix  { color: var(--or); font-weight: 500; }
+    .resume-sep { border: none; border-top: 1px solid var(--gris-cl); margin: 16px 0; }
+    .resume-ligne { display: flex; justify-content: space-between; font-size: 13px; color: var(--gris); margin-bottom: 8px; }
+    .resume-total { display: flex; justify-content: space-between; font-size: 17px; font-weight: 500; color: var(--blanc); margin-top: 12px; }
+    .resume-total span:last-child { font-family: var(--font-titre); color: var(--or); font-size: 20px; }
+    .secure-info { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gris); margin-top: 16px; }
+    .pay-btn { width: 100%; padding: 14px; background: var(--or); color: var(--noir); border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 500; cursor: pointer; transition: background .2s, transform .2s; margin-top: 20px; letter-spacing: .03em; }
+    .pay-btn:hover { background: var(--or-cl); transform: translateY(-1px); }
+    .methodes { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 4px; }
+    .methode { background: var(--noir-4); border: 1px solid var(--gris-cl); border-radius: var(--radius-sm); padding: 12px 8px; text-align: center; cursor: pointer; transition: all .2s; font-size: 13px; color: var(--gris); }
+    .methode:hover { border-color: var(--or-fonce); color: var(--or); }
+    .methode.selected { border-color: var(--or); color: var(--or); background: var(--or-bg); }
+    .methode .m-icon { font-size: 22px; display: block; margin-bottom: 4px; }
+    .section-carte, .section-mobile { display: none; }
+    .section-carte.visible, .section-mobile.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">
+      <span class="logo-cauris" aria-hidden="true">𓆉</span>
+      <img src="logo-original.png" alt="Chez KAMAKY" class="logo-img" />
+      <span class="logo-cauris" aria-hidden="true">𓆉</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--or)">
+      Paiement 100% securise
+    </div>
+  </nav>
+
+  <div class="pay-wrap">
+    <a href="index.html" class="pay-back">← Retour à la boutique</a>
+
+    <h1 class="pay-title">Finaliser ma commande</h1>
+    <p class="pay-sub">
+      <span style="color:var(--or)">𓆉</span>
+      Livraison en 48h partout en Côte d'Ivoire
+    </p>
+
+    <div class="pay-steps">
+      <div class="pay-step done">✓ Panier</div>
+      <div class="pay-step active">Livraison &amp; paiement</div>
+      <div class="pay-step">Confirmation</div>
+    </div>
+
+    <div class="pay-layout">
+
+      <!-- GAUCHE -->
+      <div>
+        <div class="pay-card">
+          <div class="pay-card-title">Adresse de livraison</div>
+          <div class="field-row">
+            <div class="field">
+              <label>Prénom</label>
+              <input type="text" id="prenom" placeholder="Ex : Kofi" />
+            </div>
+            <div class="field">
+              <label>Nom</label>
+              <input type="text" id="nom" placeholder="Ex : Mensah" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Numéro de téléphone</label>
+            <input type="tel" id="tel" placeholder="+225 07 00 00 00 00" />
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="votre@email.com" />
+          </div>
+          <div class="field">
+            <label>Adresse complète</label>
+            <input type="text" id="adresse" placeholder="Quartier, rue, numéro..." />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Ville</label>
+              <input type="text" id="ville" placeholder="Abidjan" />
+            </div>
+            <div class="field">
+              <label>Pays</label>
+              <select id="pays">
+                <option>Côte d'Ivoire</option>
+                <option>Sénégal</option>
+                <option>Mali</option>
+                <option>Burkina Faso</option>
+                <option>Ghana</option>
+                <option>Guinée</option>
+                <option>Cameroun</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODE DE PAIEMENT -->
+        <div class="pay-card">
+          <div class="pay-card-title">Mode de paiement</div>
+          <div class="methodes">
+            <div class="methode selected" onclick="choisirMethode('carte', this)">
+              <span class="m-icon">💳</span>Carte bancaire
+            </div>
+            <div class="methode" onclick="choisirMethode('paypal', this)">
+              <span class="m-icon">🅿️</span>PayPal
+            </div>
+            <div class="methode" onclick="choisirMethode('mobile', this)">
+              <span class="m-icon">📱</span>Mobile Money
+            </div>
+            <div class="methode" onclick="choisirMethode('crypto', this)">
+              <span class="m-icon">🪙</span>Crypto
+            </div>
+            <div class="methode" onclick="choisirMethode('virement', this)">
+              <span class="m-icon">🏦</span>Virement
+            </div>
+            <div class="methode" onclick="choisirMethode('livraison', this)">
+              <span class="m-icon">🚪</span>À la livraison
+            </div>
+          </div>
+
+          <!-- CARTE -->
+          <div class="section-carte visible" id="section-carte">
+            <div style="margin-top:20px">
+              <div class="card-preview">
+                <div class="card-num-display" id="card-display">•••• •••• •••• ••••</div>
+                <div class="card-meta">
+                  <span><label style="font-size:10px;color:var(--gris)">TITULAIRE</label><strong id="card-nom">Votre nom</strong></span>
+                  <span style="text-align:right"><label style="font-size:10px;color:var(--gris)">EXPIRE</label><strong id="card-exp">MM/AA</strong></span>
+                </div>
+              </div>
+              <div class="field">
+                <label>Numéro de carte</label>
+                <input type="text" id="cardnum" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)" />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label>Date d'expiration</label>
+                  <input type="text" id="expiry" placeholder="MM/AA" maxlength="5" oninput="formatExpiry(this)" />
+                </div>
+                <div class="field">
+                  <label>CVV</label>
+                  <input type="text" id="cvv" placeholder="•••" maxlength="3" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MOBILE MONEY -->
+          <div class="section-mobile" id="section-mobile">
+            <div style="margin-top:20px">
+              <div class="field">
+                <label>Opérateur</label>
+                <select id="operateur-mobile">
+                  <option>Orange Money</option>
+                  <option>MTN Mobile Money</option>
+                  <option>Moov Money</option>
+                  <option>Wave</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Numéro Mobile Money</label>
+                <input type="tel" id="num-mobile" placeholder="+225 07 00 00 00 00" />
+              </div>
+              <p style="font-size:13px;color:var(--gris);margin-top:8px">
+                Vous recevrez un appel pour confirmer le paiement.
+              </p>
+            </div>
+          </div>
+
+          <!-- PAYPAL -->
+          <div id="section-paypal" style="display:none;margin-top:20px">
+            <div style="background:var(--noir-4);border:1px solid var(--gris-cl);border-radius:var(--radius-sm);padding:20px;text-align:center">
+              <p style="font-size:14px;color:var(--blanc-2);font-weight:500;margin-bottom:6px">Payer avec PayPal</p>
+              <p style="font-size:13px;color:var(--gris);line-height:1.7">Vous serez contacté par notre équipe pour finaliser le paiement PayPal.</p>
+            </div>
+          </div>
+
+          <!-- CRYPTO -->
+          <div id="section-crypto" style="display:none;margin-top:20px">
+            <div class="field">
+              <label>Cryptomonnaie</label>
+              <select><option>Bitcoin (BTC)</option><option>Ethereum (ETH)</option><option>USDT (Tether)</option><option>BNB</option></select>
+            </div>
+            <p style="font-size:12px;color:var(--gris);margin-top:8px">Notre équipe vous enverra l'adresse de portefeuille après confirmation.</p>
+          </div>
+
+          <!-- VIREMENT -->
+          <div id="section-virement" style="display:none;margin-top:20px">
+            <div style="background:var(--noir-4);border:1px solid var(--gris-cl);border-radius:var(--radius-sm);padding:16px">
+              <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--gris-cl)"><span style="color:var(--gris)">Banque</span><span style="color:var(--blanc-2)">SGCI — Abidjan</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--gris-cl)"><span style="color:var(--gris)">Titulaire</span><span style="color:var(--blanc-2)">KAMAKY Store</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0"><span style="color:var(--gris)">Référence</span><span style="color:var(--or)">Votre numéro de téléphone</span></div>
+            </div>
+            <p style="font-size:12px;color:var(--gris);margin-top:10px;line-height:1.7">Commande traitée après réception du virement (1-2 jours ouvrés).</p>
+          </div>
+
+          <!-- LIVRAISON -->
+          <div id="section-livraison" style="display:none;margin-top:20px">
+            <p style="font-size:14px;color:var(--gris);line-height:1.8">
+              Vous payez en espèces à la réception de votre commande.<br>
+              Notre livreur vous contactera 30 minutes avant l'arrivée.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DROITE : RÉSUMÉ -->
+      <div>
+        <div class="resume-card">
+          <div class="resume-title">Récapitulatif</div>
+          <div id="resume-items">
+            <p style="color:var(--gris);font-size:13px;">Chargement...</p>
+          </div>
+          <hr class="resume-sep" />
+          <div class="resume-ligne"><span>Livraison</span><span style="color:#4DC9A0">Gratuite</span></div>
+          <div class="resume-total">
+            <span>Total</span>
+            <span id="resume-total-montant">0 FCFA</span>
+          </div>
+          <button class="pay-btn" onclick="confirmerPaiement()">
+            Confirmer la commande
+          </button>
+          <div class="secure-info">
+            Paiement chiffré SSL — vos données sont protégées
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let methodeActive = 'carte';
+
+    // ── Afficher le bon mode de paiement ──
+    function choisirMethode(methode, el) {
+      methodeActive = methode;
+      document.querySelectorAll('.methode').forEach(m => m.classList.remove('selected'));
+      el.classList.add('selected');
+      ['carte','mobile','paypal','crypto','virement','livraison'].forEach(id => {
+        const s = document.getElementById('section-' + id);
+        if (s) { s.style.display = 'none'; s.classList.remove('visible'); }
+      });
+      const section = document.getElementById('section-' + methode);
+      if (section) { section.style.display = 'block'; section.classList.add('visible'); }
+    }
+
+    // ── Formatage carte ──
+    function formatCard(el) {
+      let v = el.value.replace(/\D/g, '').substring(0, 16);
+      el.value = v.replace(/(.{4})/g, '$1 ').trim();
+      document.getElementById('card-display').textContent = el.value || '•••• •••• •••• ••••';
+    }
+
+    function formatExpiry(el) {
+      let v = el.value.replace(/\D/g, '');
+      if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2, 4);
+      el.value = v;
+      document.getElementById('card-exp').textContent = el.value || 'MM/AA';
+    }
+
+    // ── Charger le panier et afficher le récapitulatif ──
+    function chargerRecapitulatif() {
+      const panier = JSON.parse(localStorage.getItem('kamaky_cart') || '[]');
+      const container = document.getElementById('resume-items');
+      const totalEl   = document.getElementById('resume-total-montant');
+
+      if (panier.length === 0) {
+        container.innerHTML = '<p style="color:var(--gris);font-size:13px;">Votre panier est vide.</p>';
+        totalEl.textContent = '0 FCFA';
+        return;
+      }
+
+      let total = 0;
+      container.innerHTML = panier.map(item => {
+        const soustotal = item.prix * item.quantity;
+        total += soustotal;
+        return `
+          <div class="resume-item">
+            <div class="ri-left">
+              <img src="${item.img}" alt="${item.nom}" class="ri-img"
+                   onerror="this.src='logo-original.png';" />
+              <div>
+                <div class="ri-nom">${item.nom}</div>
+                <div class="ri-qty">x ${item.quantity}</div>
+              </div>
+            </div>
+            <span class="ri-prix">${soustotal.toLocaleString('fr-FR')} F</span>
+          </div>`;
+      }).join('');
+
+      totalEl.textContent = total.toLocaleString('fr-FR') + ' FCFA';
+    }
+
+    // ── Confirmer et envoyer sur WhatsApp ──
+    function confirmerPaiement() {
+      const prenom  = document.getElementById('prenom').value.trim();
+      const nom     = document.getElementById('nom').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const tel     = document.getElementById('tel').value.trim();
+      const adresse = document.getElementById('adresse').value.trim();
+      const ville   = document.getElementById('ville').value.trim();
+      const pays    = document.getElementById('pays').value.trim();
+
+      if (!prenom || !tel) {
+        alert('Veuillez remplir au moins votre prénom et téléphone.');
+        return;
+      }
+
+      const panier = JSON.parse(localStorage.getItem('kamaky_cart') || '[]');
+
+      let lignesProduits = '';
+      let total = 0;
+      panier.forEach(item => {
+        const soustotal = item.prix * item.quantity;
+        total += soustotal;
+        lignesProduits += '\n- ' + item.nom + ' x' + item.quantity + ' = ' + soustotal.toLocaleString('fr-FR') + ' FCFA';
+      });
+
+      if (!lignesProduits) lignesProduits = '\n(panier vide)';
+
+      const numCommande = 'KMK-' + Math.floor(10000 + Math.random() * 90000);
+
+      // Infos Mobile Money si choisi
+      let infosPaiement = methodeActive.toUpperCase();
+      if (methodeActive === 'mobile') {
+        const op  = document.getElementById('operateur-mobile')?.value || '';
+        const num = document.getElementById('num-mobile')?.value || '';
+        infosPaiement = 'MOBILE MONEY - ' + op + ' - ' + num;
+      }
+
+      const message = encodeURIComponent(
+        'NOUVELLE COMMANDE - Chez KAMAKY\n' +
+        'Commande : #' + numCommande + '\n\n' +
+        'CLIENT :\n' +
+        'Nom : ' + prenom + ' ' + nom + '\n' +
+        'Tel : ' + tel + '\n' +
+        'Email : ' + email + '\n' +
+        'Adresse : ' + adresse + ', ' + ville + ', ' + pays + '\n\n' +
+        'PRODUITS :' + lignesProduits + '\n\n' +
+        'TOTAL : ' + total.toLocaleString('fr-FR') + ' FCFA\n' +
+        'Paiement : ' + infosPaiement
+      );
+
+      window.open('https://wa.me/22505540492190?text=' + message, '_blank');
+
+      const params = new URLSearchParams({ prenom, email, commande: numCommande });
+      window.location.href = 'confirmation.html?' + params.toString();
+    }
+
+    // ── Init ──
+    document.addEventListener('DOMContentLoaded', () => {
+      chargerRecapitulatif();
+
+      const prenomEl = document.getElementById('prenom');
+      const nomEl    = document.getElementById('nom');
+      if (prenomEl && nomEl) {
+        const maj = () => {
+          const val = (prenomEl.value + ' ' + nomEl.value).trim();
+          document.getElementById('card-nom').textContent = val || 'Votre nom';
+        };
+        prenomEl.addEventListener('input', maj);
+        nomEl.addEventListener('input', maj);
+      }
+    });
+  </script>
+</body>
+</html>
