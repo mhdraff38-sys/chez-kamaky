@@ -432,7 +432,10 @@
         'Paiement : ' + infosPaiement
       );
 
-      window.open('https://wa.me/22505540492190?text=' + message, '_blank');
+      // Vider le panier après commande
+      localStorage.removeItem('kamaky_panier');
+
+      window.open('https://wa.me/2250554049219?text=' + message, '_blank');
 
       const params = new URLSearchParams({ prenom, email, commande: numCommande });
       window.location.href = 'confirmation.html?' + params.toString();
