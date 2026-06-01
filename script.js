@@ -221,4 +221,53 @@ document.addEventListener("DOMContentLoaded", () => {
   afficherContenuPanier();
   mettreAJourBadge();
   document.getElementById("btn-cart").addEventListener("click", ouvrirPanier);
+  // RECHERCHE
+  function toggleRecherche() {
+    const barre = document.getElementById('barre-recherche');
+    const input = document.getElementById('input-recherche');
+    if (barre.style.display === 'none') {
+      barre.style.display = 'block';
+      input.focus();
+    } else {
+      barre.style.display = 'none';
+      input.value = '';
+      afficherProduits();
+    }
+  }
+
+  function rechercherProduit(query) {
+    const grille = document.getElementById('produits-grid');
+    const q = query.toLowerCase().trim();
+    if (!q) { afficherProduits(); return; }
+    const resultats = produits.filter(p =>
+      p.nom.toLowerCase().includes(q) ||
+      p.cat.toLowerCase().includes(q)
+    );
+    if (resultats.length === 0) {
+      grille.innerHTML = '<p style="color:var(--gris);text-align:center;padding:40px;">Aucun produit trouvé.</p>';
+      return;
+    }
+    grille.innerHTML = resultats.map((p, index) => {
+      const dansLePanier = panier[p.id] > 0;
+      const badgeHTML = p.badge === "new" ? '<span class="produit-badge badge-new">Nouveau</span>'
+        : p.badge === "promo" ? '<span class="produit-badge badge-promo">Promo</span>' : "";
+      return `
+        <div class="produit-card" style="animation-delay:${index * 0.05}s">
+          <div class="produit-img">${badgeHTML}
+            <img src="${p.img}" alt="${p.nom}" loading="lazy"
+                 onerror="this.src='logo-original.png';" />
+          </div>
+          <div class="produit-body">
+            <div class="produit-cat">${p.cat}</div>
+            <div class="produit-nom">${p.nom}</div>
+            <div class="produit-footer">
+              <span class="produit-prix">${p.prix.toLocaleString("fr-FR")} F</span>
+              <button class="btn-ajouter ${dansLePanier ? "ajoute" : ""}" onclick="ajouterAuPanier(${p.id})">
+                ${dansLePanier ? "Ajouté" : "+ Ajouter"}
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }).join("");
+  }
 });
