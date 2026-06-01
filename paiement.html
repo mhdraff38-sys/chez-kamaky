@@ -366,14 +366,61 @@
     });
 
     function confirmerPaiement() {
-      const prenom  = document.getElementById('prenom').value;
-      const email   = document.getElementById('email').value;
-      const tel     = document.getElementById('tel').value;
+  const prenom  = document.getElementById('prenom').value.trim();
+  const nom     = document.getElementById('nom').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const tel     = document.getElementById('tel').value.trim();
+  const adresse = document.getElementById('adresse').value.trim();
+  const ville   = document.getElementById('ville').value.trim();
+  const pays    = document.getElementById('pays').value.trim();
 
-      if (!prenom || !email || !tel) {
-        alert('Veuillez remplir au moins votre prénom, email et téléphone.');
-        return;
-      }
+  if (!prenom || !email || !tel) {
+    alert('Veuillez remplir au moins votre prénom, email et téléphone.');
+    return;
+  }
+
+  // Récupérer le panier depuis localStorage
+  const panier = JSON.parse(localStorage.getItem('kamaky_cart') || '[]');
+  
+  // Construire la liste des produits
+  let lignesProduits = '';
+  let total = 0;
+  
+  if (panier.length > 0) {
+    panier.forEach(item => {
+      const soustotal = item.prix * item.quantity;
+      total += soustotal;
+      lignesProduits += `\n- ${item.nom} x${item.quantity} = ${soustotal.toLocaleString('fr-FR')} FCFA`;
+    });
+  } else {
+    // Fallback : lire depuis le résumé affiché
+    lignesProduits = '\n(voir récapitulatif)';
+  }
+
+  // Numéro de commande aléatoire
+  const numCommande = 'KMK-' + Math.floor(10000 + Math.random() * 90000);
+
+  // Construire le message WhatsApp
+  const message = encodeURIComponent(
+    'NOUVELLE COMMANDE - Chez KAMAKY\n' +
+    'Commande : #' + numCommande + '\n\n' +
+    'CLIENT :\n' +
+    'Nom : ' + prenom + ' ' + nom + '\n' +
+    'Tel : ' + tel + '\n' +
+    'Email : ' + email + '\n' +
+    'Adresse : ' + adresse + ', ' + ville + ', ' + pays + '\n\n' +
+    'PRODUITS :' + lignesProduits + '\n\n' +
+    'TOTAL : ' + total.toLocaleString('fr-FR') + ' FCFA\n' +
+    'Paiement : ' + methodeActive.toUpperCase()
+  );
+
+  // Ouvrir WhatsApp avec votre numéro
+  window.open('https://wa.me/22505540492190?text=' + message, '_blank');
+
+  // Rediriger vers confirmation
+  const params = new URLSearchParams({ prenom, email, commande: numCommande });
+  window.location.href = 'confirmation.html?' + params.toString();
+}
       // Rediriger vers la page de confirmation
       const params = new URLSearchParams({ prenom, email });
       window.location.href = 'confirmation.html?' + params.toString();
