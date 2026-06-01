@@ -169,7 +169,11 @@
     <div class="panier-items" id="panier-items"></div>
     <div class="panier-footer" id="panier-footer"></div>
   </aside>
-
+<div id="barre-recherche" style="display:none; position:fixed; top:70px; left:0; right:0; z-index:999; padding:12px 20px; background:var(--noir-2); border-bottom:1px solid var(--gris-cl);">
+  <input id="input-recherche" type="text" placeholder="Rechercher un produit..."
+    style="width:100%; padding:10px 16px; background:var(--noir-4); border:1px solid var(--or); border-radius:var(--radius-sm); color:var(--blanc); font-size:14px; outline:none;"
+    oninput="rechercherProduit(this.value)" />
+</div>
   <script src="script.js"></script>
   <!-- BOUTON WHATSAPP -->
   <a href="https://wa.me/2250554049219?text=Bonjour%20Chez%20KAMAKY%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20vos%20produits%20!" class="whatsapp-btn" target="_blank" aria-label="Contacter sur WhatsApp">
