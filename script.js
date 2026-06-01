@@ -37,7 +37,11 @@ const produits = [
 // ÉTAT
 // ===========================
 let categorieActive = "Tous";
-let panier = {};
+let panier = JSON.parse(localStorage.getItem("kamaky_panier") || "{}");
+
+function sauvegarderPanier() {
+  localStorage.setItem("kamaky_panier", JSON.stringify(panier));
+}
 
 // ===========================
 // AFFICHAGE PRODUITS
@@ -97,6 +101,7 @@ function initialiserFiltres() {
 // ===========================
 function ajouterAuPanier(id) {
   panier[id] = (panier[id] || 0) + 1;
+  sauvegarderPanier();
   afficherContenuPanier();
   mettreAJourBadge();
   afficherProduits();
@@ -109,6 +114,7 @@ function retirerDuPanier(id) {
   } else {
     delete panier[id];
   }
+  sauvegarderPanier();
   afficherContenuPanier();
   mettreAJourBadge();
   afficherProduits();
@@ -116,6 +122,7 @@ function retirerDuPanier(id) {
 
 function augmenterQte(id) {
   panier[id] = (panier[id] || 0) + 1;
+  sauvegarderPanier();
   afficherContenuPanier();
   mettreAJourBadge();
 }

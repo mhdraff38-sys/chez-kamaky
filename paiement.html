@@ -319,30 +319,57 @@
       document.getElementById('card-exp').textContent = el.value || 'MM/AA';
     }
 
+    // ── Liste produits (même que script.js) ──
+    const PRODUITS = [
+      { id: 1,  nom: "Robe Imprimée Africaine",      prix: 12000, img: "Robe imprimée africaine.jpg" },
+      { id: 2,  nom: "Tenue Casual",                 prix: 9500,  img: "tenue-casual.jpg" },
+      { id: 3,  nom: "Ensemble Orange Moderne",      prix: 18000, img: "Ensemble orange moderne.jpg" },
+      { id: 4,  nom: "Tenue Chic Camel",             prix: 7500,  img: "Tenue chic camel.jpg" },
+      { id: 5,  nom: "Robe Longue Plage",            prix: 14000, img: "Robe longue plage.jpg" },
+      { id: 6,  nom: "Collection Sacs Cuir",         prix: 22000, img: "Collection sacs cuir.jpg" },
+      { id: 7,  nom: "Sac Bandoulière Croco",        prix: 15000, img: "Sac bandoulière croco.jpg" },
+      { id: 8,  nom: "Tote Bag Cuir Camel",          prix: 21000, img: "Tote bag cuir camel.jpg" },
+      { id: 9,  nom: "Crocs Confort Blanc",          prix: 12000, img: "Crocs confort blanc.jpg" },
+      { id: 10, nom: "Sandales Dorées Africaines",   prix: 11000, img: "Sandales dorées africaines.jpg" },
+      { id: 11, nom: "Sandales Noires Élégantes",    prix: 13500, img: "Sandales noires élégantes.jpg" },
+      { id: 12, nom: "Smartphones Android",          prix: 45000, img: "Smartphones Android.jpg" },
+      { id: 13, nom: "Écouteurs Sans Fil",           prix: 18500, img: "Écouteurs sans fil.jpg" },
+      { id: 14, nom: "Pack Smartphones",             prix: 85000, img: "Pack smartphones.jpg" },
+      { id: 15, nom: "Bracelet Bois Africain",       prix: 4500,  img: "Bracelet bois africain.jpg" },
+      { id: 16, nom: "Parure Cauris Africaine",      prix: 7500,  img: "Parure cauris africaine.jpg" },
+      { id: 17, nom: "Médaillon Sculpté Africain",   prix: 6500,  img: "Médaillon sculpté africain.jpg" },
+      { id: 18, nom: "Masque Africain Perles",       prix: 9500,  img: "Masque africain perles.jpg" },
+      { id: 19, nom: "Masque Africain Traditionnel", prix: 8000,  img: "Masque africain traditionnel.jpg" },
+      { id: 20, nom: "Masques Muraux Bois Naturel",  prix: 15000, img: "Masques muraux bois naturel.jpg" },
+    ];
+
     // ── Charger le panier et afficher le récapitulatif ──
     function chargerRecapitulatif() {
-      const panier = JSON.parse(localStorage.getItem('kamaky_cart') || '[]');
-      const container = document.getElementById('resume-items');
-      const totalEl   = document.getElementById('resume-total-montant');
+      const panierBrut = JSON.parse(localStorage.getItem('kamaky_panier') || '{}');
+      const container  = document.getElementById('resume-items');
+      const totalEl    = document.getElementById('resume-total-montant');
+      const articles   = Object.entries(panierBrut).filter(([, q]) => q > 0);
 
-      if (panier.length === 0) {
+      if (articles.length === 0) {
         container.innerHTML = '<p style="color:var(--gris);font-size:13px;">Votre panier est vide.</p>';
         totalEl.textContent = '0 FCFA';
         return;
       }
 
       let total = 0;
-      container.innerHTML = panier.map(item => {
-        const soustotal = item.prix * item.quantity;
+      container.innerHTML = articles.map(([id, qte]) => {
+        const p = PRODUITS.find(x => x.id == id);
+        if (!p) return '';
+        const soustotal = p.prix * qte;
         total += soustotal;
         return `
           <div class="resume-item">
             <div class="ri-left">
-              <img src="${item.img}" alt="${item.nom}" class="ri-img"
+              <img src="${p.img}" alt="${p.nom}" class="ri-img"
                    onerror="this.src='logo-original.png';" />
               <div>
-                <div class="ri-nom">${item.nom}</div>
-                <div class="ri-qty">x ${item.quantity}</div>
+                <div class="ri-nom">${p.nom}</div>
+                <div class="ri-qty">x ${qte}</div>
               </div>
             </div>
             <span class="ri-prix">${soustotal.toLocaleString('fr-FR')} F</span>
@@ -367,14 +394,17 @@
         return;
       }
 
-      const panier = JSON.parse(localStorage.getItem('kamaky_cart') || '[]');
+      const panierBrut2 = JSON.parse(localStorage.getItem('kamaky_panier') || '{}');
+      const articles2   = Object.entries(panierBrut2).filter(([, q]) => q > 0);
 
       let lignesProduits = '';
       let total = 0;
-      panier.forEach(item => {
-        const soustotal = item.prix * item.quantity;
+      articles2.forEach(([id, qte]) => {
+        const p = PRODUITS.find(x => x.id == id);
+        if (!p) return;
+        const soustotal = p.prix * qte;
         total += soustotal;
-        lignesProduits += '\n- ' + item.nom + ' x' + item.quantity + ' = ' + soustotal.toLocaleString('fr-FR') + ' FCFA';
+        lignesProduits += '\n- ' + p.nom + ' x' + qte + ' = ' + soustotal.toLocaleString('fr-FR') + ' FCFA';
       });
 
       if (!lignesProduits) lignesProduits = '\n(panier vide)';
