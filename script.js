@@ -221,7 +221,9 @@ document.addEventListener("DOMContentLoaded", () => {
   afficherContenuPanier();
   mettreAJourBadge();
   document.getElementById("btn-cart").addEventListener("click", ouvrirPanier);
-  // RECHERCHE
+});
+
+// RECHERCHE
   function toggleRecherche() {
     const barre = document.getElementById('barre-recherche');
     const input = document.getElementById('input-recherche');
