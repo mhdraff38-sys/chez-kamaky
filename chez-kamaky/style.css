@@ -1,3 +1,7 @@
+/* Correction du panier sur téléphone */
+.panier-sidebar { height: 100vh !important; height: 100dvh !important; }
+.panier-footer { padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important; }
+.panier-overlay.open ~ .whatsapp-btn { display: none !important; }
 /* === VARIABLES === */
 :root {
   --noir:      #0A0A0A;
